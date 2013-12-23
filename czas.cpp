@@ -16,94 +16,44 @@ Czas::Czas(int h, int m, int s, int ms)
     this->M=m;
     this->S=s;
     this->MS=ms;
-    setProperTimeFormat(*this);
+    setProperTimeFormat();
 }
+
 /*********************************************************************************************/
 
-void Czas::SetNormalizeTime(int h, int m, int s, int ms)
+void Czas::setProperTimeFormat(void)
 {
-    M=m;
-    H=h;
-    S=s;
-    MS=ms;
-    if(MS>999)
+    if(this->MS>999)
     {
-        S+= MS/1000;
-        MS%=1000;
+        this->S+= this->MS/1000;
+        this->MS%=1000;
+    }
+    if(this->MS<0)
+    {
+        this->MS=0;
     }
 
-
-    if(S>59)
+    if(this->S>59)
     {
-        M+=S/60;
-        S%=60;
+        this->M+=this->S/60;
+        this->S%=60;
     }
-
-    if(M>59)
+    if(this->S<0)
     {
-        H+=M/60;
-        M%=60;
+        this->S=0;
     }
-}
-/*********************************************************************************************/
-
-void Czas::SetNormalizeTime2(Czas* czas)
-{
-
-    if(czas->MS>999)
+    if(this->M>59)
     {
-        czas->S+= czas->MS/1000;
-        czas->MS%=1000;
+        this->H+=this->M/60;
+        this->M%=60;
     }
-
-
-    if(czas->S>59)
+    if(this->M<0)
     {
-        czas->M+=czas->S/60;
-        czas->S%=60;
+        this->M=0;
     }
-
-    if(czas->M>59)
+    if(this->H<0)
     {
-        czas->H+=czas->M/60;
-        czas->M%=60;
-    }
-}
-/*********************************************************************************************/
-
-void Czas::setProperTimeFormat(Czas& czas)
-{
-    if(czas.MS>999)
-    {
-        czas.S+= czas.MS/1000;
-        czas.MS%=1000;
-    }
-    if(czas.MS<0)    //ask him whether or not I have to 0 a variable if it is less than 0
-    {
-        czas.MS=0;
-    }
-
-    if(czas.S>59)
-    {
-        czas.M+=czas.S/60;
-        czas.S%=60;
-    }
-    if(czas.S<0)
-    {
-        czas.S=0;
-    }
-    if(czas.M>59)
-    {
-        czas.H+=czas.M/60;
-        czas.M%=60;
-    }
-    if(czas.M<0)
-    {
-        czas.M=0;
-    }
-    if(czas.H<0)
-    {
-        czas.H=0;
+        this->H=0;
     }
 }
 /*********************************************************************************************/
@@ -150,7 +100,7 @@ Czas& Czas ::operator += (const Czas &x)
     this->S += x.S;
     this->M += x.M;
     this->H += x.H;
-    setProperTimeFormat(*this);
+    setProperTimeFormat();
     return *this;
 }
 /*********************************************************************************************/
@@ -161,7 +111,7 @@ Czas& Czas::operator -= (const Czas &x)
     this->S -= x.S;
     this->M -= x.M;
     this->H -= x.H;
-    setProperTimeFormat(*this);
+    setProperTimeFormat();
     return *this;
 
 }

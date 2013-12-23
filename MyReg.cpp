@@ -17,7 +17,7 @@
 
 //-----------------------------------------------------------------------------
 
-struct CtrlData_s 
+struct CtrlData_s
 {
 	char	cmd;
 	double	data;
@@ -81,7 +81,8 @@ bool RegHister1::SetPar( double al1 , double ah1, double al2, double ah2)
     h1=ah1;
     l2=al2;
     h2=ah2;
-    ok = h2>l2>h1>l1>=0;
+        if(h2>l2&&l2>h1&&h1>l1&&l1>= 0)ok=true;
+    else ok=false;
     return ok;
 }
 
@@ -105,7 +106,8 @@ bool RegHister1::SetPar(char parameter, double value)
         h2=value;
         break;
     }
-    ok = h2>l2>h1>l1>= 0;
+    if(h2>l2&&l2>h1&&h1>l1&&l1>= 0)ok=true
+    else ok=false;
     return ok;
 }
 
@@ -345,7 +347,7 @@ void Input( void )
 		CtrlData.data = strtod( buf, NULL );
 		CtrlData.cmd = CMD_TEMP;
 		break;
-	
+
 	case 't' :
 	case 'T' :
 		CtrlData.data = strtod( &buf[1], NULL );
@@ -402,7 +404,7 @@ void *Thread1( void *arg )
 int	main( void )
 {
 	pthread_t	threadId;
-	
+
 	double	polZad,polAktualne;
 	int	zal;
 
@@ -465,7 +467,7 @@ int	main( void )
 
 	delwin( InputWin );
 	delwin( OutputWin );
-	
+
 	ncClose( );
 
 	return 0;

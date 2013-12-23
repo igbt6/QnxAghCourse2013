@@ -50,9 +50,7 @@ private :
     int M;
     int S;
     int MS;
-    void SetNormalizeTime(int h, int m, int s, int ms);
-    void SetNormalizeTime2(Czas* czas);
-    void setProperTimeFormat(Czas& czas);
+    void setProperTimeFormat(void);
 };
 
 
